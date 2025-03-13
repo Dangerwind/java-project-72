@@ -35,7 +35,7 @@ public class App {
         });
 */
 
-        app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
+        app.get("/", ctx -> ctx.result("Welcome шаг 3!"));
         return app;
 
     }
