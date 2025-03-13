@@ -24,10 +24,14 @@ public class App {
         return app;
 
     }
-
+//  получаем порт из окружения, если его нет то 7070
+    public static int getPort() {
+        return Integer.parseInt(System.getenv()
+                .getOrDefault("PORT", "7070"));
+    }
     public static void main(String[] args) throws IOException, SQLException {
         Javalin app = getApp();
-        app.start(7070);
+        app.start(getPort());
     }
 
 }
