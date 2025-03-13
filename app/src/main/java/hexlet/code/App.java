@@ -4,10 +4,25 @@ package hexlet.code;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import com.zaxxer.hikari.HikariConfig;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
+
+
+
+
 public class App {
+
+    public static String getUrl() {
+        return System.getenv()
+                .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+    }
+
+
     public static Javalin getApp() {
+
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();

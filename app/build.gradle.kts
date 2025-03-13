@@ -2,6 +2,8 @@ plugins {
     id("java")
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
+
+    id("io.freefair.lombok") version "8.13"
 }
 
 group = "hexlet.code"
@@ -24,6 +26,11 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.3")
 
     implementation("org.slf4j:slf4j-simple:2.0.9")
+
+// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation("com.zaxxer:HikariCP:6.2.1")
+
+
 }
 
 tasks.test {
