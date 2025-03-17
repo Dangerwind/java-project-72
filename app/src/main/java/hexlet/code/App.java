@@ -5,10 +5,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.zaxxer.hikari.HikariConfig;
+import controllers.UrlsController;
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.model.Url;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
-
+import static io.javalin.rendering.template.TemplateUtil.model;
 
 
 public class App {
@@ -18,6 +24,12 @@ public class App {
                 .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
     }
 
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
+    }
 
     public static Javalin getApp() {
 
@@ -26,18 +38,13 @@ public class App {
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
-        /*
-        var app = Javalin.create(config -> {
-            config.bundledPlugins.enableDevLogging();
-            config.fileRenderer(new JavalinJte());
-        });
-*/
+        // основная страница
+        app.get(NamedRoutes.rootPath(), UrlsController::root);
 
-        app.get("/", ctx -> ctx.result("Welcome шаг 3!"));
         return app;
-
     }
 //  получаем порт из окружения, если его нет то 7070
     public static int getPort() {

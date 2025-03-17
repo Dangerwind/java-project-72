@@ -23,9 +23,13 @@ dependencies {
 
     implementation("io.javalin:javalin:6.1.3")
     implementation("io.javalin:javalin-bundle:6.1.3")
-    implementation("io.javalin:javalin-rendering:6.1.3")
 
     implementation("org.slf4j:slf4j-simple:2.0.9")
+
+// JTE
+    implementation("gg.jte:jte:3.1.16")
+
+    implementation("io.javalin:javalin-rendering:6.5.0")
 
 // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     implementation("com.zaxxer:HikariCP:6.2.1")
