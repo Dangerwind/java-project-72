@@ -31,6 +31,7 @@ dependencies {
 
     implementation("io.javalin:javalin-rendering:6.5.0")
 
+    implementation("com.h2database:h2:2.2.220")
 // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     implementation("com.zaxxer:HikariCP:6.2.1")
 

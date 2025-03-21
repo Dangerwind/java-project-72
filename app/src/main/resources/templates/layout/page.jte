@@ -1,6 +1,7 @@
+@import hexlet.code.dto.BasePage
 @import gg.jte.Content
 @param Content content
-@param Content footer = null
+@param BasePage page = null
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -15,7 +16,11 @@
 </head>
 <body>
 
-<nav class="fixed-top text-start border p-3 bg-light">
+
+
+<!--  <nav class="fixed-top text-start border p-3 bg-light"> -->
+
+<nav class="text-start border p-3 bg-light">
     <div class="btn-group" role="group" aria-label="Простой пример">
         <button type="button" class="btn btn-secondary disabled" tabindex="-1" role="button" aria-disabled="true">
             Анализатор страниц
@@ -24,6 +29,29 @@
         <a href="urls/" type="button" class="btn btn-secondary">Сайты</a>
     </div>
 </nav>
+
+ @if(page != null && page.getFlashType() != null && page.getFlashMessage() != null)
+    @if(page.getFlashType().equals("info"))
+        <!-- голубое инфо alert-info-->
+        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-info" role="alert">
+            <p class="m-0">${page.getFlashMessage()}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif(page.getFlashType().equals("danger"))
+        <!-- красная при ошибках  alert-danger -->
+        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-danger" role="alert">
+            <p class="m-0">${page.getFlashMessage()}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif(page.getFlashType().equals("success"))
+        <!-- зеленая все хорошо alert-success -->
+        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-success" role="alert">
+            <p class="m-0">${page.getFlashMessage()}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+ @endif
+
 
 <div>
     ${content}
