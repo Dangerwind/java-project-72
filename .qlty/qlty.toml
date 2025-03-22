@@ -1,10 +1,10 @@
 
 config_version = "0"
 
+
 [[source]]
 name = "default"
-repository = "https://github.com/qltysh/qlty.git"
-tag = "v0.447.0"
+default = true
 
 [[plugin]]
 name = "actionlint"
