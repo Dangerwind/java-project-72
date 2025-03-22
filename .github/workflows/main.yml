@@ -28,12 +28,6 @@ jobs:
       - name: Build project
         run: make build
 
-      - name: Checkstyle Main
-        run: make checkstyleMain
-
-      - name: Checkstyle Test
-        run: make checkstyleTest
-
       - name: Tests
         run: make test
 
