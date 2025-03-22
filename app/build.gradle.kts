@@ -1,9 +1,15 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
+
     id("java")
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     id("io.freefair.lombok") version "8.13"
+
+    jacoco
 }
 
 group = "hexlet.code"
@@ -18,13 +24,15 @@ application {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
 
-    implementation("io.javalin:javalin:6.1.3")
-    implementation("io.javalin:javalin-bundle:6.1.3")
+// https://mvnrepository.com/artifact/io.javalin/javalin
+    implementation("io.javalin:javalin:6.5.0")
 
-    implementation("org.slf4j:slf4j-simple:2.0.9")
+// https://mvnrepository.com/artifact/io.javalin/javalin-bundle
+    implementation("io.javalin:javalin-bundle:6.5.0")
+
+// https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation("org.slf4j:slf4j-simple:2.0.17")
 
 // JTE
     implementation("gg.jte:jte:3.1.16")
@@ -36,8 +44,36 @@ dependencies {
     implementation("com.zaxxer:HikariCP:6.2.1")
 
 
+
+// https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation("org.assertj:assertj-core:3.27.3")
+
+    // https://mvnrepository.com/artifact/org.junit/junit-bom
+    testImplementation(platform("org.junit:junit-bom:5.10.1"))
+        //     testImplementation(platform("org.junit:junit-bom:5.12.1"))
+
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+   // testImplementation("org.junit.jupiter:junit-jupiter:5.12.1")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
+
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
 }
 
 tasks.test {
     useJUnitPlatform()
+    // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        // showStackTraces = true
+        // showCauses = true
+        showStandardStreams = true
+    }
 }

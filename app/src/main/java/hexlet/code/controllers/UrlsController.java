@@ -1,4 +1,4 @@
-package controllers;
+package hexlet.code.controllers;
 
 
 import hexlet.code.dto.UrlPage;

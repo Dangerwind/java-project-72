@@ -10,19 +10,16 @@ import java.util.stream.Collectors;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import controllers.UrlsController;
+import hexlet.code.controllers.UrlsController;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
-import hexlet.code.model.Url;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 
 import hexlet.code.repository.BaseRepository;
-
-import static io.javalin.rendering.template.TemplateUtil.model;
 
 @Slf4j
 public class App {

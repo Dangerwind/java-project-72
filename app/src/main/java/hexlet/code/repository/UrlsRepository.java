@@ -82,4 +82,7 @@ public class UrlsRepository extends BaseRepository {
         }
     }
 
+ //   public static void removeAll() {
+  //  }
+
 }

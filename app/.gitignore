@@ -7,6 +7,10 @@ jte-classes.*
 jte-classes
 jte-classes/
 .idea
+*.jte-classes
+Jteurlslist*
+/jte-classes/
+jte
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
