@@ -57,8 +57,6 @@ dependencies {
    // testImplementation("org.junit.jupiter:junit-jupiter:5.12.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    // https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
-    testImplementation("org.jacoco:jacoco-maven-plugin:0.8.12")
 
 
 }
