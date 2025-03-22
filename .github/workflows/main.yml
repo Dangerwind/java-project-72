@@ -37,12 +37,14 @@ jobs:
         run: make test
 
       - uses: qltysh/qlty-action/coverage@main
+        env:
+          QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+        if: ${{ env.QLTY_COVERAGE_TOKEN != '' }}
         with:
-          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: reports/coverage.xml
-
-
-
+          tag: cli
+          skip-errors: true
 
   
 
