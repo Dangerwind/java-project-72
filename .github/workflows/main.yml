@@ -40,8 +40,10 @@ jobs:
       - uses: qltysh/qlty-action/coverage@main
         with:
           coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: build/reports/jacoco/test/jacocoTestReport.xml
-          add-prefix: src/main/java/
+          coverageCommand: make report
+          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          files: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml
+
 
 
   
