@@ -36,10 +36,9 @@ jobs:
       - name: Tests
         run: make test
 
-      - name: Publish code coverage
-        uses: qltysh/qlty-action/coverage@main
+      - uses: qltysh/qlty-action/coverage@main
         with:
-          coverage-token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           JACOCO_SOURCE_PATH: app/src/main/java
           files: reports/coverage.xml
           coverageCommand: make report
