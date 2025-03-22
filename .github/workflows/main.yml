@@ -37,9 +37,16 @@ jobs:
         run: make test
 
       - uses: qltysh/qlty-action/coverage@main
+        env:
+          QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          JACOCO_SOURCE_PATH: ${{github.workspace}}/app/src/main/java
         with:
-          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: reports/coverage.xml
+          tag: cli
+          skip-errors: true
+          coverageCommand: make report
+          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
 
 
 

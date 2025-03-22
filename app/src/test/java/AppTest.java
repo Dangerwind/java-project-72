@@ -1,5 +1,4 @@
-package hexlet.code;
-
+import hexlet.code.App;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
