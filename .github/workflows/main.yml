@@ -1,0 +1,50 @@
+name: Java CI
+
+on:
+  - push
+  - pull_request
+
+defaults:
+  run:
+    working-directory: app
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup
+        run: make setup
+
+      - name: Build project
+        run: make build
+
+      - name: Checkstyle Main
+        run: make checkstyleMain
+
+      - name: Checkstyle Test
+        run: make checkstyleTest
+
+      - name: Tests
+        run: make test
+
+      - uses: qltysh/qlty-action/coverage@main
+        with:
+          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
+          files: reports/coverage.xml
+
+
+
+
+  
+
+
+    
