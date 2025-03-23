@@ -1,7 +1,8 @@
 .DEFAULT_GOAL := build-run
+.PHONY: build
 
 setup:
-	./gradlew wrapper --gradle-version 8.7
+	./gradlew wrapper --gradle-version 8.12
 
 build:
 	./gradlew clean build
@@ -26,4 +27,3 @@ build-run: build run
 report:
 	./gradlew jacocoTestReport
 
-.PHONY: build

@@ -1,3 +1,4 @@
+.PHONY: build
 run-dist:
 	make -C app run-dist
 
@@ -25,4 +26,3 @@ setup:
 build-run:
 	make -C app build-run
 
-.PHONY: build

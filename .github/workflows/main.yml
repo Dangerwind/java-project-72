@@ -8,19 +8,23 @@ defaults:
   run:
     working-directory: app
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+          architecture: x64
+
+      - uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: 8.12
+          arguments: build
+          build-root-directory: app
 
       - name: Setup
         run: make setup
@@ -40,11 +44,12 @@ jobs:
       - name: Report
         run: make report
 
+
       - uses: qltysh/qlty-action/coverage@main
         with:
           coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: app/build/reports/jacoco/test/jacocoTestReport.xml
-          add-prefix: app/src/main/java/
+          files: build/reports/jacoco/test/jacocoTestReport.xml
+          add-prefix: src/main/java/
 
 
 
