@@ -48,7 +48,7 @@ jobs:
         with:
           coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: build/reports/jacoco/test/jacocoTestReport.xml
-          add-prefix: src/main/java/
+
 
 
 
