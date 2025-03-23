@@ -9,7 +9,7 @@
  -----
  
 
-[![Java CI](https://github.com/Dangerwind/java-project-72/actions/workflows/main.yml/badge.svg)](https://github.com/Dangerwind/java-project-72/actions/workflows/main.yml)
+[![Java CI](https://github.com/Dangerwind/java-project-72/actions/workflows/build.yml/badge.svg)](https://github.com/Dangerwind/java-project-72/actions/workflows/build.yml)
 
  -----
 
