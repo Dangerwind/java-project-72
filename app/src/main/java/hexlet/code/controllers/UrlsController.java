@@ -12,10 +12,7 @@ import io.javalin.http.Context;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -98,7 +95,7 @@ public class UrlsController {
     }
 
     public static void showUrl(Context ctx) throws SQLException {
-        var id = ctx.pathParamAsClass("id",Long.class).get();
+        var id = ctx.pathParamAsClass("id", Long.class).get();
 
         var url = UrlsRepository.findById(id);
         var page = new UrlPage(url);

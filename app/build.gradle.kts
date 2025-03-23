@@ -11,6 +11,7 @@ plugins {
 
     application
     jacoco
+    checkstyle
 }
 
 group = "hexlet.code"

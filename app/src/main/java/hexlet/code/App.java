@@ -88,14 +88,3 @@ public class App {
 }
 
 
-/*
-Hostname  dpg-cv9fh7jqf0us73au31rg-a
-Port  5432
-Database  mypostgresql_jx6b
-Username  mypostgresql_jx6b_user
-Password  5zDdSq0JuJIoQ3qDp3f7WljlGDJ88FrT
-Internal Database URL   postgresql://mypostgresql_jx6b_user:5zDdSq0JuJIoQ3qDp3f7WljlGDJ88FrT@dpg-cv9fh7jqf0us73au31rg-a/mypostgresql_jx6b
-External Database URL   postgresql://mypostgresql_jx6b_user:5zDdSq0JuJIoQ3qDp3f7WljlGDJ88FrT@dpg-cv9fh7jqf0us73au31rg-a.oregon-postgres.render.com/mypostgresql_jx6b
-PSQL Command   PGPASSWORD=5zDdSq0JuJIoQ3qDp3f7WljlGDJ88FrT psql -h dpg-cv9fh7jqf0us73au31rg-a.oregon-postgres.render.com -U mypostgresql_jx6b_user mypostgresql_jx6b
-
- */

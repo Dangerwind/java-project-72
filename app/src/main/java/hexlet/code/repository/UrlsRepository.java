@@ -52,7 +52,7 @@ public class UrlsRepository extends BaseRepository {
         var sql = "SELECT * FROM urls WHERE name = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1,name);
+            stmt.setString(1, name);
             var resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
@@ -69,7 +69,7 @@ public class UrlsRepository extends BaseRepository {
         var sql = "SELECT * FROM urls WHERE id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1,id);
+            stmt.setLong(1, id);
             var resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
