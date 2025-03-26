@@ -11,12 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/*
-        app.get(NamedRoutes.rootPath(), UrlsController::root);
-        app.post(NamedRoutes.urlsPath(), UrlsController::addUrl);
-        app.get(NamedRoutes.urlsPath(), UrlsController::showUrls);
-        app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
- */
+
 public class AppTest {
     private Javalin app;
 

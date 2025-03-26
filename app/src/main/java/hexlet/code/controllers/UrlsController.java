@@ -47,10 +47,10 @@ public class UrlsController {
             var body = Jsoup.parse(response.getBody());
             var statusCheck = response.getStatus();
 
-            var getSome = body.selectFirst("title");
-            var titleText = getSome != null ? getSome.text() : "";
 
-            getSome = body.selectFirst("h1");
+            var titleText = body.title();
+
+            var getSome = body.selectFirst("h1");
             var h1 = getSome != null ? getSome.text() : "";
 
             getSome = body.selectFirst("meta[name=description]");
@@ -65,8 +65,8 @@ public class UrlsController {
             ctx.sessionAttribute("flashType", "info");
             ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
-             ctx.sessionAttribute("flashMessage","Некорректный адрес");
-             ctx.sessionAttribute("flashType", "danger");
+            ctx.sessionAttribute("flashMessage", "Некорректный адрес");
+            ctx.sessionAttribute("flashType", "danger");
             ctx.redirect(NamedRoutes.urlPath(id));
         }
     }

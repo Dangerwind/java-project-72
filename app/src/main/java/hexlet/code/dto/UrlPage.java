@@ -21,7 +21,7 @@ public class UrlPage extends BasePage {
     private Url url;
     private List<UrlCheck> urlsCheck;
 
-    public UrlPage(Url url, List<UrlCheck> urlsCheckList ) {
+    public UrlPage(Url url, List<UrlCheck> urlsCheckList) {
         this.url = url;
         this.urlsCheck = urlsCheckList;
     }

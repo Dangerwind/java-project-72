@@ -38,8 +38,8 @@ public class UrlsRepository extends BaseRepository {
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
-                var created_at = resultSet.getTimestamp("created_at").toLocalDateTime();
-                var url = new Url(name, created_at);
+                var createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
+                var url = new Url(name, createdAt);
                 url.setId(id);
                 url.setName(name);
                 result.add(url);
