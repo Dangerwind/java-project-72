@@ -1,6 +1,7 @@
 @import hexlet.code.util.NamedRoutes
 
 @import hexlet.code.dto.UrlsPage
+
 @param UrlsPage page
 
 
@@ -31,12 +32,22 @@ content = @`
                             ${product.getName()}
                         </a>
                     </td>
-                    <td>
-                      ${product.getCreatedAt().format(page.getFormatter())}
-                    </td>
-                    <td>
-                        пусто
-                    </td>
+                    @if(page.getLastCheck().containsKey(product.getId()))
+                        <td>
+                                ${page.getLastCheck().get(product.getId()).getCreatedAt().format(page.getFormatter())}
+                        </td>
+                        <td>
+                                ${page.getLastCheck().get(product.getId()).getStatusCode()}
+                        </td>
+                    @else
+                        <td>
+                            <p> Проверка не проводилась </p>
+                        </td>
+                        <td>
+                            <p> Проверка не проводилась </p>
+                        </td>
+                    @endif
+
                 </tr>
             @endfor
 

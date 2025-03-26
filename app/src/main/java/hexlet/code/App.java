@@ -69,10 +69,8 @@ public class App {
         app.post(NamedRoutes.urlsPath(), UrlsController::addUrl);
         app.get(NamedRoutes.urlsPath(), UrlsController::showUrls);
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
-
-        // для 7 этапа заготовил
         app.post(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
-
+        app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         return app;
     }
 //  получаем порт из окружения, если его нет то 7070

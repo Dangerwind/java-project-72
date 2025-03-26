@@ -38,8 +38,8 @@ public class UrlsRepository extends BaseRepository {
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
-                var price = resultSet.getTimestamp("created_at").toLocalDateTime();
-                var url = new Url(name, price);
+                var created_at = resultSet.getTimestamp("created_at").toLocalDateTime();
+                var url = new Url(name, created_at);
                 url.setId(id);
                 url.setName(name);
                 result.add(url);
@@ -62,6 +62,8 @@ public class UrlsRepository extends BaseRepository {
                 return url;
             }
             return null;
+        }  catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -79,10 +81,10 @@ public class UrlsRepository extends BaseRepository {
                 return url;
             }
             return null;
+        }  catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
- //   public static void removeAll() {
-  //  }
 
 }

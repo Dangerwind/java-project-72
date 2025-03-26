@@ -59,7 +59,16 @@ dependencies {
    // testImplementation("org.junit.jupiter:junit-jupiter:5.12.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
 
+// https://mvnrepository.com/artifact/com.konghq/unirest-java
+   implementation("com.konghq:unirest-java:4.0.0-RC2")
+    // https://mvnrepository.com/artifact/com.konghq/unirest-java-core
+   // compileOnly("com.konghq:unirest-java-core:4.4.5")
 
+    // https://mvnrepository.com/artifact/com.konghq/unirest-java-bom
+    implementation("com.konghq:unirest-java-bom:4.4.5")
+
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation("org.jsoup:jsoup:1.19.1")
 
 }
 

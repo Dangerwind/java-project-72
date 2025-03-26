@@ -1,5 +1,6 @@
 @import hexlet.code.dto.UrlPage
 @import hexlet.code.util.NamedRoutes
+
 @param UrlPage page
 
 @template.layout.page(
@@ -19,50 +20,67 @@ content = @`
 
             <table class="table">
                 <tr>
-                    <td>
-                        ID
-                    </td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Дата создания</th>
+                </tr>
+                <tr>
                     <td>
                         ${page.getUrl().getId()}
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        Имя
-                    </td>
                     <td>
                         ${page.getUrl().getName()}
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Дата создания
                     </td>
                     <td>
                         ${page.getUrl().getCreatedAt().format(page.getFormatter())}
                     </td>
                 </tr>
-
             </table>
 
             <h1>Проверки</h1>
 
-            <table class="table table-striped">
-
+            @if(page.getUrlsCheck().isEmpty())
+                <h2> Проверка еще не проводилась</h2>
+            @else
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td>
-                            ${page.getUrl().getId()}
-                        </td>
-                        <td>
-                            ${page.getUrl().getName()}
-                        </td>
-                        <td>
-                            ${page.getUrl().getCreatedAt().format(page.getFormatter())}
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Код ответа</th>
+                        <th scope="col">title</th>
+                        <th scope="col">h1</th>
+                        <th scope="col">description</th>
+                        <th scope="col">Дата проверки</th>
                     </tr>
+                    </thead>
+                    @for(var product : page.getUrlsCheck())
+                        <tr>
+                            <td>
+                                ${product.getId()}
+                            </td>
+                            <td>
+                                ${product.getStatusCode()}
+                            </td>
+                            <td>
+                                ${product.getTitle()}
+                            </td>
+                            <td>
+                                ${product.getH1()}
+                            </td>
+                            <td>
+                                ${product.getDescription()}
+                            </td>
+                            <td>
+                                ${product.getCreatedAt().format(page.getFormatter())}
+                            </td>
+                        </tr>
+                    @endfor
+                </table>
 
-            </table>
+            @endif
+
+
+
         </div>
     </div>
 `,
