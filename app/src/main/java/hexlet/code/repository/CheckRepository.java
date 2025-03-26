@@ -83,10 +83,10 @@ public class CheckRepository extends BaseRepository {
                 listOfUrls.setH1(resultSet.getString("h1"));
                 listOfUrls.setDescription(resultSet.getString("description"));
                 listOfUrls.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
-                var urlid = resultSet.getLong("url_id");
-                listOfUrls.setUrlId(urlid);
+                var urlId = resultSet.getLong("url_id");
+                listOfUrls.setUrlId(urlId);
 
-                lastCheckMap.put(urlid, listOfUrls);
+                lastCheckMap.put(urlId, listOfUrls);
             }
 
             return lastCheckMap;
