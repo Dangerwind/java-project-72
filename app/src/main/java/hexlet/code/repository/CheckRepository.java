@@ -69,7 +69,7 @@ public class CheckRepository extends BaseRepository {
     public static Map<Long, UrlCheck> findLast() {
         // все без дубликатов по url_id и сортирует по времени создания
 
-         String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id DESC, created_at DESC";
+        String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id DESC, created_at DESC";
 
         Map<Long, UrlCheck> lastCheckMap = new HashMap<>();
 
