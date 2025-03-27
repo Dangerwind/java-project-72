@@ -91,7 +91,7 @@ public class UrlsController {
             ctx.redirect(NamedRoutes.rootPath());
             return;
         }
-        if(uri == null) {
+        if (uri == null) {
             ctx.sessionAttribute("flashMessage", "Некорректный URL");
             ctx.sessionAttribute("flashType", "danger");
             ctx.redirect(NamedRoutes.rootPath());
