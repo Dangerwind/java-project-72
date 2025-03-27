@@ -81,8 +81,10 @@ public class UrlsController {
 
 // --- добавляет сайт и выводит станицу списка всех сайтов и когда они были проверены -------------
     public static void addUrl(Context ctx) throws SQLException {
-        var urlsName = ctx.formParam("url");
-        var ldt = LocalDateTime.now();
+        var urlsName = ctx.formParamAsClass("url", String.class)
+                .check(n -> !n.isEmpty(), "Пустой URL")
+                .get()
+                .trim();
 
         // получает url который ввели
         URL uri = null;
@@ -98,9 +100,9 @@ public class UrlsController {
 
         String protocol = uri.getProtocol();
         String host = uri.getHost();
-        String port = String.valueOf(uri.getPort());
+        int port = uri.getPort();
         // собрали полное имя хост с протоколом и портом
-        String newUrl = protocol + "://" + host + ((port.equals("-1") ? "" : (":" + port)) + "/");
+        String newUrl = protocol + "://" + host + ((port == -1 ? "" : (":" + port)) ); //  + "/");
 
         // если такой URL есть в базе
         if (UrlsRepository.findByName(newUrl).isPresent()) {
@@ -109,6 +111,7 @@ public class UrlsController {
             ctx.redirect(NamedRoutes.rootPath());
             return;
         }
+        var ldt = LocalDateTime.now();
         var myUrl = new Url(newUrl, ldt);
         UrlsRepository.save(myUrl);  // сохранили его
 
