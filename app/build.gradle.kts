@@ -73,6 +73,9 @@ dependencies {
 // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation("org.postgresql:postgresql:42.7.5")
 
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+
 
 }
 
