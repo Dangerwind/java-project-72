@@ -91,6 +91,12 @@ public class UrlsController {
             ctx.redirect(NamedRoutes.rootPath());
             return;
         }
+        if(uri == null) {
+            ctx.sessionAttribute("flashMessage", "Некорректный URL");
+            ctx.sessionAttribute("flashType", "danger");
+            ctx.redirect(NamedRoutes.rootPath());
+            return;
+        }
 
         String protocol = uri.getProtocol();
         String host = uri.getHost();
