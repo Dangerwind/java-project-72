@@ -66,13 +66,16 @@ public class App {
         });
 
         // основная страница
+        app.get(NamedRoutes.page404(), UrlsController::page404);
         app.get(NamedRoutes.rootPath(), UrlsController::root);
         app.post(NamedRoutes.urlsPath(), UrlsController::addUrl);
         app.get(NamedRoutes.urlsPath(), UrlsController::showUrls);
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
         app.post(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
+        app.get("*", UrlsController::page404);
         return app;
+
     }
 //  получаем порт из окружения, если его нет то 7070
     public static int getPort() {

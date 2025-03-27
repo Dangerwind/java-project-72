@@ -27,7 +27,12 @@ import org.jsoup.Jsoup;
 
 public class UrlsController {
 
-
+    public static void page404(Context ctx) {
+        var page = new BasePage();
+        page.setFlashType(ctx.consumeSessionAttribute("flashType"));
+        page.setFlashMessage(ctx.consumeSessionAttribute("flashMessage"));
+        ctx.render("404.jte", model("page", page));
+    }
 // --- главная страница ----------------------------------------------------------------------
     public static void root(Context ctx) {
         var page = new BasePage();
@@ -127,6 +132,12 @@ public class UrlsController {
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var url = UrlsRepository.findById(id);
+        if (url == null) {
+            ctx.sessionAttribute("flashMessage", "Некорректный адрес");
+            ctx.sessionAttribute("flashType", "danger");
+            ctx.redirect(NamedRoutes.page404());
+            return;
+        }
         var urls = CheckRepository.findById(id);
         var page = new UrlPage(url, urls);
 
