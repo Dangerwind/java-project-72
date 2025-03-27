@@ -19,8 +19,8 @@ public class CheckRepository extends BaseRepository {
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, urlCheck.getStatusCode());
-            preparedStatement.setString(2, urlCheck.getH1());
-            preparedStatement.setString(3, urlCheck.getTitle());
+            preparedStatement.setString(3, urlCheck.getH1());
+            preparedStatement.setString(2, urlCheck.getTitle());
             preparedStatement.setString(4, urlCheck.getDescription());
             preparedStatement.setLong(5, urlCheck.getUrlId());
             var createdAt = LocalDateTime.now();
@@ -69,9 +69,7 @@ public class CheckRepository extends BaseRepository {
     public static Map<Long, UrlCheck> findLast() {
         // все без дубликатов по url_id и сортирует по времени создания
 
-        // String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id DESC, created_at DESC";
-        String sql = "SELECT * FROM (SELECT DISTINCT ON (url_id) * FROM url_checks "
-                + "ORDER BY url_id, created_at DESC) sub ORDER BY created_at DESC";
+         String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id DESC, created_at DESC";
 
         Map<Long, UrlCheck> lastCheckMap = new HashMap<>();
 
