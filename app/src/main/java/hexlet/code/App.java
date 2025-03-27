@@ -24,9 +24,11 @@ import hexlet.code.repository.BaseRepository;
 @Slf4j
 public class App {
 
-    public static String getUrlDb() {
-        return System.getenv()
-                .getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+    public static String getDatabaseUrl() {
+
+        String jdbcUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
+        log.info(jdbcUrl);
+        return jdbcUrl;
     }
 
     private static TemplateEngine createTemplateEngine() {
@@ -47,7 +49,7 @@ public class App {
     public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getUrlDb());
+        hikariConfig.setJdbcUrl(getDatabaseUrl());
         //hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
 
         var dataSource = new HikariDataSource(hikariConfig);
