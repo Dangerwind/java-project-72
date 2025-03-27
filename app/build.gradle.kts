@@ -70,6 +70,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation("org.jsoup:jsoup:1.19.1")
 
+// https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.7.5")
+
+
 }
 
 tasks.jacocoTestReport {
