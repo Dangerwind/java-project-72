@@ -53,10 +53,10 @@ public class AppTest {
         assertNotNull(idInBase);  // это если не добавилось в базу
 
         JavalinTest.test(app, (server, client) -> {
-            var response = client.post(NamedRoutes.checkPath(idInBase.getId()));
+            var response = client.post(NamedRoutes.checkPath(idInBase.get().getId()));
             assertThat(response.code()).isEqualTo(200);
 
-            response = client.get(NamedRoutes.urlPath(idInBase.getId()));
+            response = client.get(NamedRoutes.urlPath(idInBase.get().getId()));
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains("Это мока-затычка для проверки");
@@ -102,7 +102,7 @@ public class AppTest {
             // пришел ли в базу url
             var savedId = UrlsRepository.findById(1L);
            // System.out.println(" ");
-            assertEquals(savedId.getName(), fixture);
+            assertEquals(savedId.get().getName(), fixture);
 
         });
     }

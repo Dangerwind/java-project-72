@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException  {
@@ -48,7 +49,7 @@ public class UrlsRepository extends BaseRepository {
         }
     }
 
-    public static Url findByName(String name) throws SQLException {
+    public static Optional<Url> findByName(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE name = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -59,15 +60,16 @@ public class UrlsRepository extends BaseRepository {
                 var createAt = resultSet.getTimestamp("created_at").toLocalDateTime();
                 var id = resultSet.getLong("id");
                 var url = new Url(id, name, createAt);
-                return url;
+                return Optional.of(url);
             }
-            return null;
+            return Optional.empty();
+
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Url findById(Long id) throws SQLException {
+    public static Optional<Url> findById(Long id) throws SQLException {
         var sql = "SELECT * FROM urls WHERE id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -78,9 +80,9 @@ public class UrlsRepository extends BaseRepository {
                 var createAt = resultSet.getTimestamp("created_at").toLocalDateTime();
                 var name = resultSet.getString("name");
                 var url = new Url(id, name, createAt);
-                return url;
+                return Optional.of(url);
             }
-            return null;
+            return Optional.empty();
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -18,7 +18,9 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import io.javalin.http.NotFoundResponse;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
@@ -44,7 +46,8 @@ public class UrlsController {
 // --- делаем проверку сайта -------------------------------------------------------
     public static void checkPath(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
-        var urlNameForCheck = UrlsRepository.findById(id);
+        var urlNameForCheck = UrlsRepository.findById(id)
+                .orElseThrow(() -> new  NotFoundResponse("Нет Url с таки ID"));
         try {
             HttpResponse<String> response = Unirest
                     .get(urlNameForCheck.getName())
@@ -105,7 +108,7 @@ public class UrlsController {
         String newUrl = protocol + "://" + host + ((port.equals("-1") ? "" : (":" + port)) + "/");
 
         // если такой URL есть в базе
-        if (UrlsRepository.findByName(newUrl) != null) {
+        if (UrlsRepository.findByName(newUrl).isPresent()) {
             ctx.sessionAttribute("flashType", "info");
             ctx.sessionAttribute("flashMessage", "Страница уже существует");
             ctx.redirect(NamedRoutes.rootPath());
@@ -137,15 +140,16 @@ public class UrlsController {
 // -- страница по одному сайту когда и какие проверки были ----------------------------------
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
-        var url = UrlsRepository.findById(id);
-        if (url == null) {
+
+        Optional<Url> url = UrlsRepository.findById(id);
+        if (url.isEmpty()) {
             ctx.sessionAttribute("flashMessage", "Некорректный адрес");
             ctx.sessionAttribute("flashType", "danger");
             ctx.redirect(NamedRoutes.page404());
             return;
         }
         var urls = CheckRepository.findById(id);
-        var page = new UrlPage(url, urls);
+        var page = new UrlPage(url.get(), urls);
 
         page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         page.setFlashMessage(ctx.consumeSessionAttribute("flashMessage"));
