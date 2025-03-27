@@ -87,14 +87,9 @@ public class UrlsController {
         // получает url который ввели
         URL uri = null;
         try {
+            assert urlsName != null;
             uri = new URI(urlsName).toURL();
         } catch (Exception e) {
-            ctx.sessionAttribute("flashMessage", "Некорректный URL");
-            ctx.sessionAttribute("flashType", "danger");
-            ctx.redirect(NamedRoutes.rootPath());
-            return;
-        }
-        if (uri == null) {
             ctx.sessionAttribute("flashMessage", "Некорректный URL");
             ctx.sessionAttribute("flashType", "danger");
             ctx.redirect(NamedRoutes.rootPath());
