@@ -24,9 +24,9 @@ import hexlet.code.repository.BaseRepository;
 @Slf4j
 public class App {
 
-    public static String getDatabaseUrl() {
+    public static String dbUrl() {
         String jdbcUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
-        log.info(jdbcUrl);
+        //log.info(jdbcUrl);
         return jdbcUrl;
     }
 
@@ -46,15 +46,11 @@ public class App {
     }
 
     public static Javalin getApp() throws IOException, SQLException {
-
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getDatabaseUrl());
-       // hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-
+        hikariConfig.setJdbcUrl(dbUrl());
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
-
-        log.info(sql);
+       // log.info(sql);
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
             statement.execute(sql);
@@ -76,7 +72,6 @@ public class App {
         app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         app.get("*", UrlsController::page404);
         return app;
-
     }
 //  получаем порт из окружения, если его нет то 7070
     public static int getPort() {
@@ -87,5 +82,4 @@ public class App {
         Javalin app = getApp();
         app.start(getPort());
     }
-
 }

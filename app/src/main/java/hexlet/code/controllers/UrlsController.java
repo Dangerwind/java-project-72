@@ -54,10 +54,7 @@ public class UrlsController {
                     .asString();
             var body = Jsoup.parse(response.getBody());
             var statusCheck = response.getStatus();
-
-
             var titleText = body.title();
-
             var getSome = body.selectFirst("h1");
             var h1 = getSome != null ? getSome.text() : "";
 
@@ -81,10 +78,10 @@ public class UrlsController {
 
 // --- добавляет сайт и выводит станицу списка всех сайтов и когда они были проверены -------------
     public static void addUrl(Context ctx) throws SQLException {
-        var urlsName = ctx.formParamAsClass("url", String.class)
-                .check(n -> !n.isEmpty(), "Пустой URL")
-                .get()
-                .trim();
+        var urlsName = ctx.formParamAsClass("url", String.class).get();
+              //  .check(n -> !n.isEmpty(), "Пустой URL")
+              //  .get()
+              //  .trim();
 
         // получает url который ввели
         URL uri = null;
@@ -102,7 +99,7 @@ public class UrlsController {
         String host = uri.getHost();
         int port = uri.getPort();
         // собрали полное имя хост с протоколом и портом
-        String newUrl = protocol + "://" + host + ((port == -1 ? "" : (":" + port))); //  + "/");
+        String newUrl = protocol + "://" + host + ((port == -1 ? "" : (":" + port)));
 
         // если такой URL есть в базе
         if (UrlsRepository.findByName(newUrl).isPresent()) {

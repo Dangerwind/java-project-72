@@ -17,7 +17,6 @@ public class UrlsRepository extends BaseRepository {
             preparedStatement.setString(1, url.getName());
             var createdAt = LocalDateTime.now();
             preparedStatement.setTimestamp(2, Timestamp.valueOf(createdAt));
-
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -48,7 +47,6 @@ public class UrlsRepository extends BaseRepository {
             return result;
         }
     }
-
     public static Optional<Url> findByName(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE name = ?";
         try (var conn = dataSource.getConnection();
@@ -63,7 +61,6 @@ public class UrlsRepository extends BaseRepository {
                 return Optional.of(url);
             }
             return Optional.empty();
-
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -87,6 +84,4 @@ public class UrlsRepository extends BaseRepository {
             throw new RuntimeException(e);
         }
     }
-
-
 }

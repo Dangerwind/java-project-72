@@ -1,6 +1,5 @@
 package hexlet.code.repository;
 
-
 import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
@@ -47,32 +46,25 @@ public class CheckRepository extends BaseRepository {
             stmt.setLong(1, urlId);
             var resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-
                 var id = resultSet.getLong("id");
                 var statusCode = resultSet.getInt("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
                 var createAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-
                 var dataToSave = new UrlCheck(statusCode, title, h1, description, urlId, createAt);
                 dataToSave.setId(id);
                 listOfUrls.add(dataToSave);
             }
             return listOfUrls;
-
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static Map<Long, UrlCheck> findLast() {
-        // все без дубликатов по url_id и сортирует по времени создания
-
         String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id DESC, created_at DESC";
-
         Map<Long, UrlCheck> lastCheckMap = new HashMap<>();
-
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();
@@ -86,12 +78,9 @@ public class CheckRepository extends BaseRepository {
                 listOfUrls.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
                 var urlId = resultSet.getLong("url_id");
                 listOfUrls.setUrlId(urlId);
-
                 lastCheckMap.put(urlId, listOfUrls);
             }
-
             return lastCheckMap;
-
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
