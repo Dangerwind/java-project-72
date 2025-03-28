@@ -17,5 +17,5 @@ test-report: test # Подготовить покрытие тестов
 	./app/gradlew -p ./app jacocoTestReport
 
 run: build # Запустить дистрибутив
-	/.app/build/install/app/bin/app
+	./app/build/install/app/bin/app
 
