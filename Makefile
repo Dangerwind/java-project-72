@@ -1,21 +1,23 @@
 .PHONY: build
 
-lint: # Проверить кодстайл
+checkstyleMain:
 	./app/gradlew -p ./app checkstyleMain
+
+checkstyleTest:
 	./app/gradlew -p ./app checkstyleTest
 
-clean: # Очистить дистрибутив
+clean:
 	./app/gradlew -p ./app clean
 
-build: clean # Установить зависимости и собрать дистрибутив
+build:
 	./app/gradlew -p ./app installDist
 
-test: build # Собрать дистрибутив и запустить тесты
+test:
 	./app/gradlew -p ./app build
 
-test-report: test # Подготовить покрытие тестов
+report:
 	./app/gradlew -p ./app jacocoTestReport
 
-run: build # Запустить дистрибутив
+run:
 	./app/build/install/app/bin/app
 
