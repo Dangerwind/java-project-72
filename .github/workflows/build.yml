@@ -2,49 +2,30 @@ name: Java CI
 
 on:
   - push
-  -
-defaults:
-  run:
-    working-directory: app
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: '23.0.1'
+          distribution: 'graalvm'
           architecture: x64
 
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.1
+          gradle-version: '8.12'
 
-      - name: Setup
-        run: make setup
-
-      - name: Build project
-        run: make build
-
-      - name: Checkstyle Main
-        run: make checkstyleMain
-
-      - name: Checkstyle Test
-        run: make checkstyleTest
-
-      - name: Tests
-        run: make test
-
-      - name: Report
-        run: make report
+      - name: Build and test
+        run: make test-report
 
       - uses: qltysh/qlty-action/coverage@main
         with:
-          coverage-token: qltcp_HBFka7w4uYYQESV3
-          files: build/reports/jacoco/test/jacocoTestReport.xml
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: app/build/reports/jacoco/test/jacocoTestReport.xml
+          add-prefix: app/src/main/java/
 
 
 

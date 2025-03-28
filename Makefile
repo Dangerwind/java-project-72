@@ -1,28 +1,31 @@
+
+ifeq ($(OS),Windows_NT)
+  SLASH='\'
+else
+  SLASH='/'
+endif
+
+GRADLEW=.$(SLASH)app$(SLASH)gradlew -p .$(SLASH)app
+BIN_APP=.$(SLASH)app$(SLASH)build$(SLASH)install$(SLASH)app$(SLASH)bin$(SLASH)app
+
 .PHONY: build
-run-dist:
-	make -C app run-dist
 
-run:
-	make -C app run
+lint: # Проверить кодстайл
+	$(GRADLEW) checkstyleMain
+	$(GRADLEW) checkstyleTest
 
-build:
-	make -C app build
+clean: # Очистить дистрибутив
+	$(GRADLEW) clean
 
-test:
-	make -C app test
+build: clean # Установить зависимости и собрать дистрибутив
+	$(GRADLEW) installDist
 
-report:
-	make -C app report
+test: build # Собрать дистрибутив и запустить тесты
+	$(GRADLEW) build
 
-checkstyleMain:
-	make -C app checkstyleMain
+test-report: test # Подготовить покрытие тестов
+	$(GRADLEW) jacocoTestReport
 
-checkstyleTest:
-	make -C app checkstyleTest
-
-setup:
-	make -C app setup
-
-build-run:
-	make -C app build-run
+run: build # Запустить дистрибутив
+	$(BIN_APP)
 
