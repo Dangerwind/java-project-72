@@ -44,7 +44,7 @@ jobs:
 
       - uses: qltysh/qlty-action/coverage@main
         with:
-          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          coverage-token: qltcp_HBFka7w4uYYQESV3
           files: build/reports/jacoco/test/jacocoTestReport.xml
 
 
