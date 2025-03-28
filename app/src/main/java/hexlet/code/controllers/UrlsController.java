@@ -102,7 +102,7 @@ public class UrlsController {
         String host = uri.getHost();
         int port = uri.getPort();
         // собрали полное имя хост с протоколом и портом
-        String newUrl = protocol + "://" + host + ((port == -1 ? "" : (":" + port)) ); //  + "/");
+        String newUrl = protocol + "://" + host + ((port == -1 ? "" : (":" + port))); //  + "/");
 
         // если такой URL есть в базе
         if (UrlsRepository.findByName(newUrl).isPresent()) {
