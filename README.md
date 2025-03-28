@@ -4,6 +4,7 @@
 [![Java CI](https://github.com/Dangerwind/java-project-72/actions/workflows/build.yml/badge.svg)](https://github.com/Dangerwind/java-project-72/actions/workflows/build.yml)
 [![Maintainability](https://qlty.sh/badges/047169aa-2f0f-4aeb-aab5-a7d36de972c2/maintainability.svg)](https://qlty.sh/gh/Dangerwind/projects/java-project-72)
 [![Code Coverage](https://qlty.sh/badges/047169aa-2f0f-4aeb-aab5-a7d36de972c2/test_coverage.svg)](https://qlty.sh/gh/Dangerwind/projects/java-project-72)
+
 ## Учебный проект по созданию сайта проверки на SEO пригодность
 Программа запрашивает адрес сайта, далее вытаскивает по этому 
 адресу title, h1, description и сохраняет в базу данных. Проект демонстрирует умение работать с Javaline и c SQL запросами. Умение создавать простые html страницы (шаблоны) 
