@@ -2,8 +2,7 @@ name: Java CI
 
 on:
   - push
-  - pull_request
-
+  -
 defaults:
   run:
     working-directory: app
