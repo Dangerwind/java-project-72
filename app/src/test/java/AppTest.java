@@ -1,5 +1,7 @@
 import hexlet.code.App;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.CheckRepository;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
@@ -11,13 +13,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+
 import okhttp3.mockwebserver.MockWebServer;
 
 public class AppTest {
@@ -35,39 +38,41 @@ public class AppTest {
         mServer.enqueue(new MockResponse().setBody(readFixtures("fixtura.html")));
         mServer.start();
     }
+    // прака по последнему пункты - вынес вперед BeforeEach
+    @BeforeEach
+    public final void setUp() throws IOException, SQLException {
+        app = App.getApp();
+    }
 
     @AfterAll
     public static void stopMServer() throws IOException {
         mServer.shutdown();
     }
-
+// !!!!! исправление 2 заменил имя на более понятное testCheckingPage   !!!!!!!!!!!!!!!
     @Test
-    public void testMock() throws SQLException {
+    public void testCheckingPage() throws SQLException {
         var mockUrlString = mServer.url("/").toString();
         Url mockUrl = new Url(mockUrlString);
         UrlsRepository.save(mockUrl); // сохранили у себя url для проверки
 
-        // -----
-
-        var idInBase = UrlsRepository.findByName(mockUrlString);
-        assertNotNull(idInBase);  // это если не добавилось в базу
+// !!!!! исправление 3-4 пунктам - убрал чтение из репозитория и взял ID из URL и убрал проверку на null
+        var idInBase = mockUrl.getId();
 
         JavalinTest.test(app, (server, client) -> {
-            var response = client.post(NamedRoutes.checkPath(idInBase.get().getId()));
+            var response = client.post(NamedRoutes.checkPath(idInBase));
             assertThat(response.code()).isEqualTo(200);
 
-            response = client.get(NamedRoutes.urlPath(idInBase.get().getId()));
+            response = client.get(NamedRoutes.urlPath(idInBase));
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains("Это мока-затычка для проверки");
+// !!!!! исправления по 5 пункту - добавил проверку данных, которые добавились в базу !!!!!!!
+            UrlCheck checkData = CheckRepository.findLast().get(1L);  // только 1 запись должна быть в Map
+            assertEquals(checkData.getH1(), "Это мока-затычка для проверки");
+            assertEquals(checkData.getTitle(), "title для моки");
+            assertEquals(checkData.getDescription(), "description для моки");
+
         });
-
-
-    }
-
-    @BeforeEach
-    public final void setUp() throws IOException, SQLException {
-        app = App.getApp();
     }
 
     @Test
@@ -82,28 +87,20 @@ public class AppTest {
 
     @Test
     public void testAddUrlPage() {
-
         JavalinTest.test(app, (server, client) -> {
-
             String fixture = "http://www.testurl.com";
-            // add url
             String urlForAdding = "url=" + fixture;
             var response = client.post(NamedRoutes.urlsPath(), urlForAdding);
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains(fixture);
-
-            // show url
             response = client.get(NamedRoutes.urlPath(1L));
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains(fixture);
 
-            // пришел ли в базу url
-            var savedId = UrlsRepository.findById(1L);
-           // System.out.println(" ");
-            assertEquals(savedId.get().getName(), fixture);
-
+//  !!!!!  исправления по 6 пункту - проверяем появилось ли добавленная ссылка в базе  !!!
+            assertFalse(UrlsRepository.findByName(fixture).isEmpty());
         });
     }
 
