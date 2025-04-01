@@ -20,8 +20,5 @@ public class NamedRoutes {
     public static String urlPath(Long id) {
         return urlPath(String.valueOf(id));
     }
-    public static String page404() {
-        return "/404";
-    }
 
 }

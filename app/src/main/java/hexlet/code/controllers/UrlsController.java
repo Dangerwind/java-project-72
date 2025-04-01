@@ -111,15 +111,10 @@ public class UrlsController {
         var ldt = LocalDateTime.now();
         var myUrl = new Url(newUrl, ldt);
         UrlsRepository.save(myUrl);  // сохранили его
-
-        // показать список url-ов
-        var allUrls = UrlsRepository.getEntities();
-        var lastCheck = CheckRepository.findLast();
-        var page = new UrlsPage(allUrls, lastCheck);
-
-        page.setFlashType("success");
-        page.setFlashMessage("Страница успешно добавлена");
-        ctx.render("urlslist.jte", model("page", page));
+// !!!! правки часть 2, 1 комментарий - сделал редирект на показ добавленных urls
+        ctx.sessionAttribute("flashMessage", "Страница успешно добавлена");
+        ctx.sessionAttribute("flashType", "success");
+        ctx.redirect(NamedRoutes.urlsPath());
     }
 
 // --- выводит страницу со списком сайтов и когда была проверка ----------------------------
@@ -136,13 +131,10 @@ public class UrlsController {
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
 
-        Optional<Url> url = UrlsRepository.findById(id);
-        if (url.isEmpty()) {
-            ctx.sessionAttribute("flashMessage", "Некорректный адрес");
-            ctx.sessionAttribute("flashType", "danger");
-            ctx.redirect(NamedRoutes.page404());
-            return;
-        }
+// !!!! правки часть 2, 2 комментарий - если не нашел - выкинул исключение 404 Not Found
+        Optional<Url> url = Optional.ofNullable(UrlsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundResponse("404, Not Found, id=" + id + " is wrong!")));
+
         var urls = CheckRepository.findById(id);
         var page = new UrlPage(url.get(), urls);
 

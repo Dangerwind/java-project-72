@@ -63,14 +63,14 @@ public class App {
         });
 
         // основная страница
-        app.get(NamedRoutes.page404(), UrlsController::page404);
         app.get(NamedRoutes.rootPath(), UrlsController::root);
         app.post(NamedRoutes.urlsPath(), UrlsController::addUrl);
         app.get(NamedRoutes.urlsPath(), UrlsController::showUrls);
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
         app.post(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
-        app.get("*", UrlsController::page404);
+// !!!! правки часть 2, 2 комментарий - нет страницы - вывели 404 ошибку
+        app.get("*", (ctx) -> ctx.result("404, Not Found").status(404));
         return app;
     }
 //  получаем порт из окружения, если его нет то 7070

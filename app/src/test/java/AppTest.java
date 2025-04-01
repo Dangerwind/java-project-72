@@ -38,7 +38,7 @@ public class AppTest {
         mServer.enqueue(new MockResponse().setBody(readFixtures("fixtura.html")));
         mServer.start();
     }
-    // прака по последнему пункты - вынес вперед BeforeEach
+// !!!!! правка по последнему пункты - вынес вперед BeforeEach
     @BeforeEach
     public final void setUp() throws IOException, SQLException {
         app = App.getApp();
@@ -48,9 +48,9 @@ public class AppTest {
     public static void stopMServer() throws IOException {
         mServer.shutdown();
     }
-// !!!!! исправление 2 заменил имя на более понятное testCheckingPage   !!!!!!!!!!!!!!!
+// !!!!! исправление по 2 пункту - заменил имя на более понятное testCheckPage !!!!!!!!!!!!!!!
     @Test
-    public void testCheckingPage() throws SQLException {
+    public void testCheckPage() throws SQLException {
         var mockUrlString = mServer.url("/").toString();
         Url mockUrl = new Url(mockUrlString);
         UrlsRepository.save(mockUrl); // сохранили у себя url для проверки
