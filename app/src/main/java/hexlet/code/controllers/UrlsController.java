@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import io.javalin.http.NotFoundResponse;
 import kong.unirest.HttpResponse;
@@ -29,12 +28,6 @@ import org.jsoup.Jsoup;
 
 public class UrlsController {
 
-    public static void page404(Context ctx) {
-        var page = new BasePage();
-        page.setFlashType(ctx.consumeSessionAttribute("flashType"));
-        page.setFlashMessage(ctx.consumeSessionAttribute("flashMessage"));
-        ctx.render("404.jte", model("page", page));
-    }
 // --- главная страница ----------------------------------------------------------------------
     public static void root(Context ctx) {
         var page = new BasePage();
@@ -68,20 +61,19 @@ public class UrlsController {
             CheckRepository.save(rr1);
             ctx.sessionAttribute("flashMessage", "Страница успешно проверена");
             ctx.sessionAttribute("flashType", "info");
-            ctx.redirect(NamedRoutes.urlPath(id));
+            //  ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
             ctx.sessionAttribute("flashMessage", "Некорректный адрес");
             ctx.sessionAttribute("flashType", "danger");
-            ctx.redirect(NamedRoutes.urlPath(id));
+            //ctx.redirect(NamedRoutes.urlPath(id));
         }
+// !!!! правки часть 3, 1 комментарий - вывел редирект из try-catch
+        ctx.redirect(NamedRoutes.urlPath(id));
     }
 
 // --- добавляет сайт и выводит станицу списка всех сайтов и когда они были проверены -------------
     public static void addUrl(Context ctx) throws SQLException {
         var urlsName = ctx.formParamAsClass("url", String.class).get();
-              //  .check(n -> !n.isEmpty(), "Пустой URL")
-              //  .get()
-              //  .trim();
 
         // получает url который ввели
         URL uri = null;
@@ -132,11 +124,14 @@ public class UrlsController {
         var id = ctx.pathParamAsClass("id", Long.class).get();
 
 // !!!! правки часть 2, 2 комментарий - если не нашел - выкинул исключение 404 Not Found
-        Optional<Url> url = Optional.ofNullable(UrlsRepository.findById(id)
-                .orElseThrow(() -> new NotFoundResponse("404, Not Found, id=" + id + " is wrong!")));
+// !!!! правки часть 3, 2 комментарий - убрал лишнюю обертку Optional
+        var url = UrlsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundResponse("404, Not Found, id=" + id + " is wrong!"));
 
+// !!!! правки часть 3, 3 комментарий - тут же мы в List<UrlCheck> запихиваем все что находится по ID
+// потому я оставил этот поиск. Или я не прав?
         var urls = CheckRepository.findById(id);
-        var page = new UrlPage(url.get(), urls);
+        var page = new UrlPage(url, urls);
 
         page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         page.setFlashMessage(ctx.consumeSessionAttribute("flashMessage"));

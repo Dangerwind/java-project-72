@@ -70,7 +70,9 @@ public class App {
         app.post(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
 // !!!! правки часть 2, 2 комментарий - нет страницы - вывели 404 ошибку
-        app.get("*", (ctx) -> ctx.result("404, Not Found").status(404));
+// !!!! правки часть 3, 4 комментарий - убрал ненужный маршрут
+// но мой вариант тоже выдавал "Status Code: 404 Not Found" если запросили маршрут которого нет
+  //      app.get("*", (ctx) -> ctx.result("404, Not Found").status(404));
         return app;
     }
 //  получаем порт из окружения, если его нет то 7070
