@@ -1,6 +1,5 @@
 package hexlet.code;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +25,6 @@ public class App {
 
     public static String dbUrl() {
         String jdbcUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
-        //log.info(jdbcUrl);
         return jdbcUrl;
     }
 
@@ -50,7 +48,6 @@ public class App {
         hikariConfig.setJdbcUrl(dbUrl());
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
-       // log.info(sql);
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
             statement.execute(sql);
@@ -69,13 +66,9 @@ public class App {
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
         app.post(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
         app.get(NamedRoutes.checkPath("{id}"), UrlsController::checkPath);
-// !!!! правки часть 2, 2 комментарий - нет страницы - вывели 404 ошибку
-// !!!! правки часть 3, 4 комментарий - убрал ненужный маршрут
-// но мой вариант тоже выдавал "Status Code: 404 Not Found" если запросили маршрут которого нет
   //      app.get("*", (ctx) -> ctx.result("404, Not Found").status(404));
         return app;
     }
-//  получаем порт из окружения, если его нет то 7070
     public static int getPort() {
         return Integer.parseInt(System.getenv()
                 .getOrDefault("PORT", "7070"));

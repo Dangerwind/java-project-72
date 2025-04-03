@@ -61,13 +61,10 @@ public class UrlsController {
             CheckRepository.save(rr1);
             ctx.sessionAttribute("flashMessage", "Страница успешно проверена");
             ctx.sessionAttribute("flashType", "info");
-            //  ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
             ctx.sessionAttribute("flashMessage", "Некорректный адрес");
             ctx.sessionAttribute("flashType", "danger");
-            //ctx.redirect(NamedRoutes.urlPath(id));
         }
-// !!!! правки часть 3, 1 комментарий - вывел редирект из try-catch
         ctx.redirect(NamedRoutes.urlPath(id));
     }
 
@@ -103,7 +100,6 @@ public class UrlsController {
         var ldt = LocalDateTime.now();
         var myUrl = new Url(newUrl, ldt);
         UrlsRepository.save(myUrl);  // сохранили его
-// !!!! правки часть 2, 1 комментарий - сделал редирект на показ добавленных urls
         ctx.sessionAttribute("flashMessage", "Страница успешно добавлена");
         ctx.sessionAttribute("flashType", "success");
         ctx.redirect(NamedRoutes.urlsPath());
@@ -122,14 +118,8 @@ public class UrlsController {
 // -- страница по одному сайту когда и какие проверки были ----------------------------------
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
-
-// !!!! правки часть 2, 2 комментарий - если не нашел - выкинул исключение 404 Not Found
-// !!!! правки часть 3, 2 комментарий - убрал лишнюю обертку Optional
         var url = UrlsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundResponse("404, Not Found, id=" + id + " is wrong!"));
-
-// !!!! правки часть 3, 3 комментарий - тут же мы в List<UrlCheck> запихиваем все что находится по ID
-// потому я оставил этот поиск. Или я не прав?
         var urls = CheckRepository.findById(id);
         var page = new UrlPage(url, urls);
 

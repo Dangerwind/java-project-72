@@ -38,7 +38,7 @@ public class AppTest {
         mServer.enqueue(new MockResponse().setBody(readFixtures("fixtura.html")));
         mServer.start();
     }
-// !!!!! правка по последнему пункты - вынес вперед BeforeEach
+
     @BeforeEach
     public final void setUp() throws IOException, SQLException {
         app = App.getApp();
@@ -48,14 +48,12 @@ public class AppTest {
     public static void stopMServer() throws IOException {
         mServer.shutdown();
     }
-// !!!!! исправление по 2 пункту - заменил имя на более понятное testCheckPage !!!!!!!!!!!!!!!
     @Test
     public void testCheckPage() throws SQLException {
         var mockUrlString = mServer.url("/").toString();
         Url mockUrl = new Url(mockUrlString);
         UrlsRepository.save(mockUrl); // сохранили у себя url для проверки
 
-// !!!!! исправление 3-4 пунктам - убрал чтение из репозитория и взял ID из URL и убрал проверку на null
         var idInBase = mockUrl.getId();
 
         JavalinTest.test(app, (server, client) -> {
@@ -66,7 +64,6 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains("Это мока-затычка для проверки");
-// !!!!! исправления по 5 пункту - добавил проверку данных, которые добавились в базу !!!!!!!
             UrlCheck checkData = CheckRepository.findLast().get(1L);  // только 1 запись должна быть в Map
             assertEquals(checkData.getH1(), "Это мока-затычка для проверки");
             assertEquals(checkData.getTitle(), "title для моки");
@@ -98,8 +95,6 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string())
                     .contains(fixture);
-
-//  !!!!!  исправления по 6 пункту - проверяем появилось ли добавленная ссылка в базе  !!!
             assertFalse(UrlsRepository.findByName(fixture).isEmpty());
         });
     }
@@ -111,7 +106,4 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(200);
         });
     }
-
-
-
 }
